@@ -5,9 +5,9 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const graphqlHttp = require("express-graphql");
-const graphqlSchema = require("./graphql/schema");
-const graphqlResolver = require("./graphql/resolvers");
-const auth = require("./middleware/auth");
+import graphqlSchema from "./graphql/schema";
+import graphqlResolver from "./graphql/resolvers";
+import auth from "./middleware/auth";
 const app = express();
 
 const fileStorage = multer.diskStorage({
@@ -80,7 +80,6 @@ app.use((error, req, res, next) => {
   const data = error.data;
   res.status(status).json({ message: message, data: data });
 });
-
 mongoose
   .connect("mongodb+srv://junaid:Jdboy123@cluster0.eos5w2i.mongodb.net/app")
   .then((result) => {

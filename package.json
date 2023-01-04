@@ -1,15 +1,15 @@
 {
-  "name": "nodejs-complete-guide",
+  "name": "Dreamers-Api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon dist/app.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/udemy-course-nodejs-complete"
+    "url": ""
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +28,8 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.15",
+    "@types/node": "^18.11.18",
     "nodemon": "^1.18.4"
   }
 }
