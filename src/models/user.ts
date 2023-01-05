@@ -1,7 +1,15 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose, { Types } from "mongoose";
 
-const userSchema = new Schema({
+const Schema = mongoose.Schema;
+interface IUser {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  password: string;
+  groups: Types.ObjectId;
+}
+const userSchema = new Schema<IUser>({
   email: {
     type: String,
     required: true,
@@ -24,7 +32,7 @@ const userSchema = new Schema({
   },
   groups: [
     {
-      type: Object,
+      type: Schema.Types.ObjectId,
       ref: "Group",
     },
   ],

@@ -1,6 +1,10 @@
 "use strict";
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const Schema = mongoose_1.default.Schema;
 const userSchema = new Schema({
     email: {
         type: String,
@@ -24,9 +28,9 @@ const userSchema = new Schema({
     },
     groups: [
         {
-            type: Object,
+            type: Schema.Types.ObjectId,
             ref: "Group",
         },
     ],
 });
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose_1.default.model("User", userSchema);

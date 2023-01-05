@@ -1,7 +1,10 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose, { Types } from "mongoose";
 
-const groupSchema = new Schema({
+const Schema = mongoose.Schema;
+interface IGroup {
+  name: string;
+}
+const groupSchema = new Schema<IGroup>({
   name: {
     type: String,
     required: true,

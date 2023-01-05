@@ -3,6 +3,7 @@ const validator = require("validator");
 const User = require("../models/user");
 const Group = require("../models/group");
 const jwt = require("jsonwebtoken");
+import { Request, Response, NextFunction } from "express";
 
 const resolvers = {
   hello() {
@@ -11,7 +12,7 @@ const resolvers = {
       views: 123,
     };
   },
-  createUser: async function ({ userInput }, req) {
+  createUser: async function ({ userInput }, req: Request) {
     const errors = [];
     if (!validator.isEmail(userInput.email)) {
       errors.push({ message: "E-Mail is invalid." });
