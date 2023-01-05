@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = (req, res, next) => {
+const auth = (req, res, next) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {
     req.isAuth = false;
@@ -22,3 +22,4 @@ module.exports = (req, res, next) => {
   req.isAuth = true;
   next();
 };
+export default auth;

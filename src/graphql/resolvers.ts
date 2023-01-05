@@ -4,7 +4,7 @@ const User = require("../models/user");
 const Group = require("../models/group");
 const jwt = require("jsonwebtoken");
 
-module.exports = {
+const resolvers = {
   hello() {
     return {
       text: "hello",
@@ -87,3 +87,4 @@ module.exports = {
     return { token: token, userId: user._id.toString() };
   },
 };
+export default resolvers;

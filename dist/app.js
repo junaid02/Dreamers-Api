@@ -3,26 +3,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var path = require("path");
-var cors = require("cors");
-var express = require("express");
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var multer = require("multer");
-var graphqlHttp = require("express-graphql");
-var schema_1 = __importDefault(require("./graphql/schema"));
-var resolvers_1 = __importDefault(require("./graphql/resolvers"));
-var auth_1 = __importDefault(require("./middleware/auth"));
-var app = express();
-var fileStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
+const path = require("path");
+const cors_1 = __importDefault(require("cors"));
+const express_1 = __importDefault(require("express"));
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const multer = require("multer");
+const graphqlHttp = require("express-graphql");
+const schema_1 = __importDefault(require("./graphql/schema"));
+const resolvers_1 = __importDefault(require("./graphql/resolvers"));
+const auth_1 = __importDefault(require("./middleware/auth"));
+const app = (0, express_1.default)();
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
         cb(null, "images");
     },
-    filename: function (req, file, cb) {
+    filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + "-" + file.originalname);
     },
 });
-var fileFilter = function (req, file, cb) {
+const fileFilter = (req, file, cb) => {
     if (file.mimetype === "image/png" ||
         file.mimetype === "image/jpg" ||
         file.mimetype === "image/jpeg") {
@@ -35,11 +35,11 @@ var fileFilter = function (req, file, cb) {
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
-app.use("/images", express.static(path.join(__dirname, "images")));
-app.use(cors({
+app.use("/images", express_1.default.static(path.join(__dirname, "images")));
+app.use((0, cors_1.default)({
     origin: "*",
 }));
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, PATCH, DELETE");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -53,26 +53,26 @@ app.use("/graphql", graphqlHttp({
     schema: schema_1.default,
     rootValue: resolvers_1.default,
     graphiql: true,
-    formatError: function (err) {
+    formatError(err) {
         if (!err.originalError) {
             return err;
         }
-        var data = err.originalError.data;
-        var message = err.message || "An error occurred.";
-        var code = err.originalError.code || 500;
+        const data = err.originalError.data;
+        const message = err.message || "An error occurred.";
+        const code = err.originalError.code || 500;
         return { message: message, status: code, data: data };
     },
 }));
-app.use(function (error, req, res, next) {
+app.use((error, req, res, next) => {
     console.log(error);
-    var status = error.statusCode || 500;
-    var message = error.message;
-    var data = error.data;
+    const status = error.statusCode || 500;
+    const message = error.message;
+    const data = error.data;
     res.status(status).json({ message: message, data: data });
 });
 mongoose
     .connect("mongodb+srv://junaid:Jdboy123@cluster0.eos5w2i.mongodb.net/app")
-    .then(function (result) {
+    .then((result) => {
     app.listen(8080);
 })
-    .catch(function (err) { return console.log(err); });
+    .catch((err) => console.log(err));

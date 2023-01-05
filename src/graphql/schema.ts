@@ -1,6 +1,6 @@
-const { buildSchema } = require("graphql");
+import { buildSchema } from "graphql";
 
-module.exports = buildSchema(`
+const schema = buildSchema(`
 
      type Group {
         _id: ID!
@@ -48,3 +48,4 @@ module.exports = buildSchema(`
         mutation: RootMutation
     }
 `);
+export default schema;

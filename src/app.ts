@@ -1,6 +1,6 @@
 const path = require("path");
-const cors = require("cors");
-const express = require("express");
+import cors from "cors";
+import express, { Request, Response, NextFunction } from "express";
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
@@ -11,15 +11,15 @@ import auth from "./middleware/auth";
 const app = express();
 
 const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req: Request, file: any, cb: any) => {
     cb(null, "images");
   },
-  filename: (req, file, cb) => {
+  filename: (req: Request, file: any, cb: any) => {
     cb(null, new Date().toISOString() + "-" + file.originalname);
   },
 });
 
-const fileFilter = (req, file, cb) => {
+const fileFilter = (req: Request, file: any, cb: any) => {
   if (
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
@@ -61,7 +61,7 @@ app.use(
     schema: graphqlSchema,
     rootValue: graphqlResolver,
     graphiql: true,
-    formatError(err) {
+    formatError(err: any) {
       if (!err.originalError) {
         return err;
       }
@@ -73,7 +73,7 @@ app.use(
   })
 );
 
-app.use((error, req, res, next) => {
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
@@ -82,7 +82,7 @@ app.use((error, req, res, next) => {
 });
 mongoose
   .connect("mongodb+srv://junaid:Jdboy123@cluster0.eos5w2i.mongodb.net/app")
-  .then((result) => {
+  .then((result: any) => {
     app.listen(8080);
   })
-  .catch((err) => console.log(err));
+  .catch((err: any) => console.log(err));

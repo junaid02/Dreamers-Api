@@ -1,3 +1,52 @@
 "use strict";
-var buildSchema = require("graphql").buildSchema;
-module.exports = buildSchema("\n\n     type Group {\n        _id: ID!\n        name: String!\n    }\n\n    type User {\n        _id: ID!\n        name: String!\n        email: String!\n        password: String\n        phone: String!\n        status: String!\n        groups: [Group!]!\n    }\n    type AuthData {\n        token: String!\n        userId: String!\n    }\n   \n    input UserInputData {\n        email: String!\n        firstName: String!\n        lastName: String!\n        phoneNumber: String!\n        password: String!\n        group:[GroupInput]\n    }\n\n    input GroupInput {\n       name: String!\n\n    }\n\n    type RootQuery {\n       login(email: String!, password: String!, group:GroupInput): AuthData!\n    }\n\n    type RootMutation {\n        createUser(userInput: UserInputData): User!\n    }\n\n    schema {\n        query: RootQuery\n        mutation: RootMutation\n    }\n");
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+const schema = (0, graphql_1.buildSchema)(`
+
+     type Group {
+        _id: ID!
+        name: String!
+    }
+
+    type User {
+        _id: ID!
+        name: String!
+        email: String!
+        password: String
+        phone: String!
+        status: String!
+        groups: [Group!]!
+    }
+    type AuthData {
+        token: String!
+        userId: String!
+    }
+   
+    input UserInputData {
+        email: String!
+        firstName: String!
+        lastName: String!
+        phoneNumber: String!
+        password: String!
+        group:[GroupInput]
+    }
+
+    input GroupInput {
+       name: String!
+
+    }
+
+    type RootQuery {
+       login(email: String!, password: String!, group:GroupInput): AuthData!
+    }
+
+    type RootMutation {
+        createUser(userInput: UserInputData): User!
+    }
+
+    schema {
+        query: RootQuery
+        mutation: RootMutation
+    }
+`);
+exports.default = schema;

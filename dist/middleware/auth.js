@@ -1,13 +1,14 @@
 "use strict";
-var jwt = require("jsonwebtoken");
-module.exports = function (req, res, next) {
-    var authHeader = req.get("Authorization");
+Object.defineProperty(exports, "__esModule", { value: true });
+const jwt = require("jsonwebtoken");
+const auth = (req, res, next) => {
+    const authHeader = req.get("Authorization");
     if (!authHeader) {
         req.isAuth = false;
         return next();
     }
-    var token = authHeader.split(" ")[1];
-    var decodedToken;
+    const token = authHeader.split(" ")[1];
+    let decodedToken;
     try {
         decodedToken = jwt.verify(token, "somesupersecretsecret");
     }
@@ -23,3 +24,4 @@ module.exports = function (req, res, next) {
     req.isAuth = true;
     next();
 };
+exports.default = auth;
